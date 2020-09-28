@@ -1,0 +1,232 @@
+1. Creating a database :-
+
+	query :- CREATE DATABASE assignments;
+
+2.Creating tables :-
+	
+	Creating customer_master table :-
+		
+		query :- CREATE TABLE customer_master(customer_number int(10) primary key, 
+						first_name varchar(20), last_name varchar(20),city varchar(10));
+
+	Creating account_master table :-	
+
+		query :- CREATE TABLE account_master(account_number int(10) primary key, account_opening_date date, customer_number int(10),
+							constraint fk foreign key (customer_number) references customer_master(customer_number));
+	
+	Creating loan_details table :-
+		
+		query :- CREATE TABLE loan_details(loanId int(5) primary key, loanType varchar(10), customer_number int(10),
+							constraint fk foreign key (customer_number) references customer_master(customer_number));
+
+3.Inserting  data into tables :-
+
+	query :-INSERT INTO customer_master VALUES(1,'surya','vamsi','chennai');
+
+4.GETTING THE STRUCTURE OF CUSTOMER_MASTER TABLE :-
+
+	query :-DESC customer_master;
+	
+output :- 
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| customer_number | int(10)     | NO   | PRI | NULL    |       |
+| first_name      | varchar(20) | YES  |     | NULL    |       |
+| last_name       | varchar(20) | YES  |     | NULL    |       |
+| city            | varchar(10) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+
+5.GETTING THE STRUCTURE OF ACCOUNT_MASTER TABLE :-
+
+	query :- DESC account_master;
+	
+output :-
++----------------------+---------+------+-----+---------+-------+
+| Field                | Type    | Null | Key | Default | Extra |
++----------------------+---------+------+-----+---------+-------+
+| account_number       | int(10) | NO   | PRI | NULL    |       |
+| account_opening_date | date    | YES  |     | NULL    |       |
+| customer_number      | int(10) | YES  | MUL | NULL    |       |
++----------------------+---------+------+-----+---------+-------+
+
+6.GETTING THE STRUCTURE OF LOAN_DETAILS TABLE :-
+
+	query :- DESC loan_details;
+
+output :-
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| customer_number | int(10)     | YES  | MUL | NULL    |       |
+| loanId          | int(5)      | NO   | PRI | NULL    |       |
+| loanType        | varchar(10) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+
+7.GETTING ALL THE  RECORDS PRESENT IN CUSTOMER_MASTER TABLE :-
+
+	query :- SELECT * FROM customer_master;	
+
+output :-
++-----------------+------------+-----------+-----------+
+| customer_number | first_name | last_name | city      |
++-----------------+------------+-----------+-----------+
+|               1 | surya      | vamsi     | chennai   |
+|               2 | satya      | prasad    | hyderabad |
+|               3 | sai        | sumanth   | hyderabad |
+|               4 | naveen     | sukumar   | chennai   |
+|               5 | sai        | varun     | banglore  |
++-----------------+------------+-----------+-----------+
+
+8.GETTING ALL THE  RECORDS PRESENT IN ACCOUNT_MASTER TABLE :-
+
+	query :- SELECT * FROM account_master;
+
+output :-
++----------------+----------------------+-----------------+
+| account_number | account_opening_date | customer_number |
++----------------+----------------------+-----------------+
+|              1 | 2020-08-21           |               1 |
+|              2 | 2019-06-21           |               1 |
+|              3 | 2019-09-03           |               2 |
+|              4 | 2019-01-16           |               3 |
+|              5 | 2019-02-19           |               3 |
++----------------+----------------------+-----------------+
+
+9.GETTING ALL THE  RECORDS PRESENT IN LOAN_DETAILS TABLE :-
+
+	query :- SELECT * FROM loan_details;
+
+output :-
++-----------------+--------+----------+
+| customer_number | loanId | loanType |
++-----------------+--------+----------+
+|               1 |      1 | personal |
+|               4 |      2 | personal |
+|               5 |      3 | house    |
++-----------------+--------+----------+
+
+10.Write a query to display account number, customer’s number, customer’s firstname,lastname,account opening date.
+Display the records sorted in ascending order based on account number.
+
+	query :- MariaDB [assignments]> SELECT account_number,am.customer_number,first_name,last_name,account_opening_date
+    -> FROM customer_master cm INNER JOIN account_master am
+    -> ON cm.customer_number=am.customer_number
+    -> ORDER BY account_number;
+
+output :-
++----------------+-----------------+------------+-----------+----------------------+
+| account_number | customer_number | first_name | last_name | account_opening_date |
++----------------+-----------------+------------+-----------+----------------------+
+|              1 |               1 | surya      | vamsi     | 2020-08-21           |
+|              2 |               1 | surya      | vamsi     | 2019-06-21           |
+|              3 |               2 | satya      | prasad    | 2019-09-03           |
+|              4 |               3 | sai        | sumanth   | 2019-01-16           |
+|              5 |               3 | sai        | sumanth   | 2019-02-19           |
++----------------+-----------------+------------+-----------+----------------------+
+
+11.Write a query to display the number of customer’s from Chennai. Give the count an alias name of Cust_Count.
+
+	query :- MariaDB [assignments]> SELECT count(customer_number) Cust_Count
+    -> FROM customer_master
+    -> WHERE city='Chennai';
+
+output :-
++------------+
+| Cust_Count |
++------------+
+|          2 |
++------------+
+
+12.Write a query to display  the customer number, customer firstname,account number for the customer’s whose accounts were created after 15th of any month.
+Display the records sorted in ascending order based on customer number and then by account number.
+
+	query :- MariaDB [assignments]> SELECT  am.customer_number, first_name, account_number
+    -> FROM customer_master cm INNER JOIN account_master am
+    -> ON cm.customer_number=am.customer_number
+    -> WHERE extract(day from account_opening_date)>15
+    -> ORDER BY am.customer_number, account_number;
+
+output :-
++-----------------+------------+----------------+
+| customer_number | first_name | account_number |
++-----------------+------------+----------------+
+|               1 | surya      |              1 |
+|               1 | surya      |              2 |
+|               3 | sai        |              4 |
+|               3 | sai        |              5 |
++-----------------+------------+----------------+
+
+13.Write a query to display the number of customers who have registration but no account in the bank.
+Give the alias name as Count_Customer for number of customers.
+
+	query :- MariaDB [assignments]> SELECT count(customer_number) Count_Customer
+    -> FROM customer_master
+    -> WHERE customer_number NOT IN (SELECT customer_number FROM account_master);
+
+output :-
++----------------+
+| Count_Customer |
++----------------+
+|              2 |
++----------------+
+
+14.Write  a query to display the firstname of the customers who have more than 1 account. Display the records in sorted order based on firstname.
+
+	query :- MariaDB [assignments]> select first_name
+    -> FROM customer_master cm INNER JOIN account_master am ON cm.customer_number=am.customer_number group by first_name having count(account_number)>1 order by first_name;
+
+output :-
++------------+
+| first_name |
++------------+
+| sai        |
+| surya      |
++------------+
+
+15.Write a query to display the number of clients who have asked for loans but they don’t have any account in the bank though they are registered customers. 
+Give the count an alias name of Count.
+
+	query :- MariaDB [assignments]> SELECT count(ld.customer_number) Count
+    -> FROM customer_master cm INNER JOIN loan_details ld
+    -> ON  cm.customer_number=ld.customer_number
+    -> WHERE cm.customer_number NOT IN ( SELECT customer_number FROM account_master);
+
+output :-
++-------+
+| Count |
++-------+
+|     2 |
++-------+
+
+16.Write a query to display the customer’s firstname who have multiple accounts (atleast  2 accounts).  
+Display the records sorted in ascending order based on customer's firstname.
+
+	query :- MariaDB [assignments]> SELECT first_name
+    -> FROM customer_master INNER JOIN account_master
+    -> ON customer_master.customer_number=account_master.customer_number GROUP BY first_name
+    -> having count(first_name)>=2 order by first_name;
+
+output :-
++------------+
+| first_name |
++------------+
+| sai        |
+| surya      |
++------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

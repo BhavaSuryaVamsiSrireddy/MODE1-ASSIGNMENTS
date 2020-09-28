@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>REGISTRATION</title>
+<!-- external styling -->
+<link rel="stylesheet" href="RegistrationStyleSheet.css">
+</head>
+<body>
+	<h1 id="heading">REGISTRATION FORM</h1>
+	<form action="SuccessRegistration.html">
+		<div class="formdivision">
+			<table>
+				<tr>
+					<td><p>Enter your name</p></td>
+					<td><input type="text" name="name" required="required"></td>
+				</tr>
+				<tr>
+					<td><p>Enter your email id</p></td>
+					<td><input type="email" name="emailid" required="required"></td>
+				</tr>
+				<tr>
+					<td><p>Enter password</p></td>
+					<td><input type="password" name="password" required="required"></td>
+				</tr>
+				<tr>
+					<td><p>Enter contact number</p></td>
+					<td><input type="number" name="number" required="required"></td>
+				</tr>
+				<tr>
+					<td><p>Select your data of birth</p></td>
+					<td><input type="date" name="date" required="required"></td>
+				</tr>
+				<tr>
+					<td><p>Select the gender</p></td>
+					<td rowspan="2"><input type="radio" name="male" value="male">
+						<label for="male">Male</label> <input type="radio" name="female"
+						value="female"> <label for="female">Female</label><br />
+						<br /></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="submit"></td>
+				</tr>
+			</table>
+		</div>
+
+	</form>
+</body>
+</html>
