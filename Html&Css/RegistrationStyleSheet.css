@@ -1,0 +1,18 @@
+@charset "ISO-8859-1";
+/* Styling by using tag directly  */
+p{
+	font-family: sans-serif;
+}
+/* Styling by using class name  */
+.formdivision{
+	width: 500px; 
+	margin: 0 auto;
+}
+/* Styling by using id name  */
+#heading{
+	text-align: center;
+}
+/* Styling by using tag directly  */
+body{
+	background-color: green;
+}
