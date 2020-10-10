@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="student" class="com.pojo.Student">
+		<property name="studentId" value="1" />
+		<property name="studentName" value="gsrd" />
+		<property name="age" value="22" />
+		<property name="gender" value="male" />
+		<property name="addresses">
+			<list>
+				<ref bean="address1"></ref>
+				<ref bean="address2"></ref>
+			</list>
+		</property>
+	</bean>
+	<bean id="address1" class="com.pojo.Address">
+		<constructor-arg name="doorNo" value="1" />
+		<constructor-arg name="city" value="hyderabad" />
+		<constructor-arg name="country" value="india" />
+	</bean>
+	<bean id="address2" class="com.pojo.Address">
+		<constructor-arg name="doorNo" value="2" />
+		<constructor-arg name="city" value="chennai" />
+		<constructor-arg name="country" value="india" />
+	</bean>
+</beans>
