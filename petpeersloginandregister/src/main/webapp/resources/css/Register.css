@@ -1,0 +1,26 @@
+@charset "ISO-8859-1";
+table {
+	top:100px;
+	width: 500px;
+	margin: 0 auto;
+}
+.error {
+	color: red;
+	font-weight: bold;
+}
+h1{
+	text-align: center;
+}
+#message{
+	text-align: center;
+	color: red;
+}
+body {
+ background-image: url("pet.jpeg");
+ background-size: 750px;
+ text-align: center;
+}
+#form{
+	display: inline-block;
+	background-color: white;
+}
